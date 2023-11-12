@@ -1,0 +1,108 @@
+import buildSrc.main.java.base.gradle.Dependencies
+import buildSrc.main.java.base.gradle.Versions
+import buildSrc.main.java.base.gradle.DebugKey
+import buildSrc.main.java.base.gradle.ReleaseKey
+import buildSrc.main.java.base.gradle.KeysPlugin
+
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+apply plugin: KeysPlugin
+apply from: "${rootProject.projectDir}/flavors.gradle"
+
+android {
+    namespace 'com.example.baseapp'
+    compileSdk Versions.Sdk.compile
+
+    defaultConfig {
+        applicationId "com.example.baseapp"
+        minSdkVersion Versions.Sdk.min
+        targetSdkVersion Versions.Sdk.target
+        versionCode Versions.Config.code
+        versionName "${Versions.Config.major}.${Versions.Config.minor}.${Versions.Config.patch}"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    dataBinding.enabled = true
+
+    signingConfigs {
+        testDev {
+            storeFile file(DebugKey.path)
+            storePassword DebugKey.password
+            keyAlias DebugKey.alias
+            keyPassword DebugKey.aliasPassword
+        }
+
+        release {
+            storeFile file(ReleaseKey.path)
+            storePassword ReleaseKey.password
+            keyAlias ReleaseKey.alias
+            keyPassword ReleaseKey.aliasPassword
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.testDev
+
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+
+            applicationIdSuffix ".debug"
+        }
+
+        release {
+            signingConfig signingConfigs.release
+
+            debuggable false
+            minifyEnabled false
+            shrinkResources false
+
+            applicationIdSuffix ""
+        }
+    }
+
+    with flavorConfig
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+
+    //Android
+    implementation Dependencies.Android.appCompat
+    implementation Dependencies.Android.constraintLayout
+    implementation Dependencies.Android.material
+
+    //Testing
+    testImplementation Dependencies.Test.junit
+    testImplementation Dependencies.Test.junit4
+    testImplementation Dependencies.Test.espresso
+
+    //Kotlin
+    implementation Dependencies.Kotlin.kotlin
+
+    //Libraries
+    implementation project(":core:data")
+    implementation project(":core:domain")
+
+    implementation project(":common:base")
+    implementation project(":feature:main")
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="17">
+      <module name="BaseApp.common.components.main" target="17" />
+      <module name="BaseApp.common.components.test" target="17" />
+      <module name="BaseApp.feature.myapplication" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

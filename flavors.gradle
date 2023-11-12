@@ -1,0 +1,27 @@
+ext.flavorConfig = {
+
+    flavorDimensions "server"
+    productFlavors {
+        Develop_ {
+            dimension "server"
+            buildConfigField "String", "ENVIRONMENT", "\"dev\""
+            buildConfigField "String", "FIREBASE_SENDER_ID", "\"437029424745\""
+            buildConfigField "String", "ADJUST_APP_TOKEN", "\"enlms9u2ecjk\""
+        }
+
+        Production_ {
+            dimension "server"
+            buildConfigField "String", "ENVIRONMENT", "\"prod\""
+            buildConfigField "String", "FIREBASE_SENDER_ID", "\"437029424745\""
+            buildConfigField "String", "ADJUST_APP_TOKEN", "\"enlms9u2ecjk\""
+        }
+    }
+
+   /* variantFilter { variant ->
+        if (variant.buildType.name == "release" || variant.buildType.name == "unsigned") {
+            if (!variant.name.contains("Production"))
+                variant.setIgnore(true)
+        }
+    }*/
+
+}

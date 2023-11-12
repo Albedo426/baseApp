@@ -1,0 +1,26 @@
+import buildSrc.main.java.base.gradle.Dependencies
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.example.base'
+}
+
+dependencies {
+
+    implementation project(":core:data")
+    implementation project(":core:domain")
+    implementation project(":core:network")
+
+    implementation Dependencies.Android.activity
+    implementation Dependencies.Android.fragment
+    implementation Dependencies.Android.material
+
+    implementation Dependencies.Ktx.viewModel
+
+    implementation Dependencies.Coil.coil
+}

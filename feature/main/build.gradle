@@ -1,0 +1,31 @@
+import buildSrc.main.java.base.gradle.Dependencies
+
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.example.main'
+}
+
+dependencies {
+
+    //Android
+    implementation Dependencies.Android.appCompat
+    implementation Dependencies.Android.constraintLayout
+    implementation Dependencies.Android.material
+
+    //Testing
+    testImplementation Dependencies.Test.junit
+    testImplementation Dependencies.Test.junit4
+    testImplementation Dependencies.Test.espresso
+
+    //Kotlin
+    implementation Dependencies.Kotlin.kotlin
+
+    //Libraries
+    implementation project(":core:data")
+    implementation project(":core:domain")
+}
